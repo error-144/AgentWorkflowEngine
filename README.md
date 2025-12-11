@@ -1,49 +1,65 @@
 # Graph-Based Code Analysis API
 
-A FastAPI application providing a graph-based workflow engine for code analysis.
+A FastAPI application that provides a graph-based workflow system for code analysis.
 
-## How to Run
+## Installation
 
-1. **Install dependencies:**
+1. Create a virtual environment:
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+2. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-2. **Start the server:**
+## Running the Application
+
 ```bash
-uvicorn app.main:app --reload
+uvicorn main:app --reload
 ```
 
-3. **Access the API:**
-- API: `http://localhost:8000`
-- Interactive docs: `http://localhost:8000/docs`
+The API will be available at `http://localhost:8000`
 
-## What the Workflow Engine Supports
+## Using the API
 
-### Core Features
+Visit `http://localhost:8000/docs` to access the interactive API documentation (Swagger UI) where you can test all endpoints directly.
 
-- **Sequential Execution**: Nodes execute in graph-defined order via edges
-- **Conditional Branching**: Dynamic routing based on state (e.g., if `issues > 2`, jump to 'issues' node)
-- **Loop Stop Conditions**: Execution stops when conditions are met (e.g., `quality >= threshold`)
-- **State Threading**: Mutable state is passed between nodes
-- **Execution Logging**: Captures node transitions and state snapshots
+## API Endpoints
 
-### Available Node Functions
+### 1. Create Graph Workflow
 
-- `extract` - Extract function names from code
-- `complexity` - Calculate average function name complexity
-- `issues` - Detect code issues (TODOs, long lines, tabs)
-- `suggest` - Generate recommendations and quality score
+`POST /graph/create` - Create a new graph workflow
 
-### API Endpoints
+![Create Graph Endpoint](./Examples/api:graph:create.png)
 
-- `POST /graph/create` - Create a new graph workflow
-- `POST /graph/run` - Execute a graph workflow
-- `GET /graph/state/{run_id}` - Get the state of a workflow run
+**Example Response:**
+![Create Response](./Examples/create%20%20Response.png)
 
-## Example Workflow
+### 2. Run Graph Workflow
 
-See `app/workflow_example.py` for a complete example of a code analysis workflow.
+`POST /graph/run` - Execute a graph workflow
+
+![Run Graph Endpoint](./Examples/api:graph:run.png)
+
+**Example Response:**
+![Run Response](./Examples/run%20response.png)
+
+### 3. Get Run State
+
+`GET /graph/state/{run_id}` - Get the state of a workflow run
+
+**Example Response:**
+![Run ID Response](./Examples/run_id%20%20response.png)
+
+## Available Node Functions
+
+- `extract` - Extract functions from code
+- `complexity` - Compute code complexity
+- `issues` - Detect code issues
+- `suggest` - Generate suggestions based on analysis
 
 ## What Would Be Improved With More Time
 
