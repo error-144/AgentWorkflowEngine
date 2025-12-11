@@ -52,7 +52,7 @@ Visit `http://localhost:8000/docs` to access the interactive API documentation (
 `GET /graph/state/{run_id}` - Get the state of a workflow run
 
 **Example Response:**
-![Run ID Response](./Examples/run_id%20response.png)
+![Run ID Response](./Examples/run_id%%response.png)
 
 ## Available Node Functions
 
