@@ -1,63 +1,59 @@
 # Graph-Based Code Analysis API
 
-A FastAPI application that provides a graph-based workflow system for code analysis.
+A FastAPI application providing a graph-based workflow engine for code analysis.
 
-## Installation
+## How to Run
 
-1. Create a virtual environment:
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
-
-2. Install dependencies:
+1. **Install dependencies:**
 ```bash
 pip install -r requirements.txt
 ```
 
-## Running the Application
-
+2. **Start the server:**
 ```bash
-uvicorn main:app --reload
+uvicorn app.main:app --reload
 ```
 
-The API will be available at `http://localhost:8000`
+3. **Access the API:**
+- API: `http://localhost:8000`
+- Interactive docs: `http://localhost:8000/docs`
 
-## Using the API
+## What the Workflow Engine Supports
 
-Visit `http://localhost:8000/docs` to access the interactive API documentation (Swagger UI) where you can test all endpoints directly.
+### Core Features
 
-## API Endpoints
+- **Sequential Execution**: Nodes execute in graph-defined order via edges
+- **Conditional Branching**: Dynamic routing based on state (e.g., if `issues > 2`, jump to 'issues' node)
+- **Loop Stop Conditions**: Execution stops when conditions are met (e.g., `quality >= threshold`)
+- **State Threading**: Mutable state is passed between nodes
+- **Execution Logging**: Captures node transitions and state snapshots
 
-### 1. Create Graph Workflow
+### Available Node Functions
 
-`POST /graph/create` - Create a new graph workflow
+- `extract` - Extract function names from code
+- `complexity` - Calculate average function name complexity
+- `issues` - Detect code issues (TODOs, long lines, tabs)
+- `suggest` - Generate recommendations and quality score
 
-![Create Graph Endpoint](./Examples/api:graph:create.png)
+### API Endpoints
 
-**Example Response:**
-![Create Response](./Examples/create%20%20Response.png)
+- `POST /graph/create` - Create a new graph workflow
+- `POST /graph/run` - Execute a graph workflow
+- `GET /graph/state/{run_id}` - Get the state of a workflow run
 
-### 2. Run Graph Workflow
+## Example Workflow
 
-`POST /graph/run` - Execute a graph workflow
+See `app/workflow_example.py` for a complete example of a code analysis workflow.
 
-![Run Graph Endpoint](./Examples/api:graph:run.png)
+## What Would Be Improved With More Time
 
-**Example Response:**
-![Run Response](./Examples/run%20response.png)
-
-### 3. Get Run State
-
-`GET /graph/state/{run_id}` - Get the state of a workflow run
-
-**Example Response:**
-![Run ID Response](./Examples/run_id%20%20response.png)
-
-## Available Node Functions
-
-- `extract` - Extract functions from code
-- `complexity` - Compute code complexity
-- `issues` - Detect code issues
-- `suggest` - Generate suggestions based on analysis
-
+1. **Persistence**: Add database storage for graphs and runs instead of in-memory storage
+2. **Error Handling**: More robust error recovery and retry mechanisms
+3. **Validation**: Enhanced input validation and schema checking for graph definitions
+4. **Testing**: Comprehensive unit and integration tests
+5. **Performance**: Async optimizations and caching for repeated operations
+6. **Monitoring**: Add logging, metrics, and observability
+7. **Graph Visualization**: API endpoint to visualize graph structure
+8. **Node Library**: Expandable registry of node functions with plugin support
+9. **State Management**: Version control for state snapshots and rollback capabilities
+10. **Documentation**: OpenAPI schema improvements and more detailed examples
